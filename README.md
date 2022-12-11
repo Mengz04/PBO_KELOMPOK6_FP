@@ -1,6 +1,6 @@
 # DEV NOTES 
 **UPDATE 11/12/22**
-Penambahan base game yang meliputi:
+Upload base game yang meliputi:
 ```
 application (base game package):
   Game.java
