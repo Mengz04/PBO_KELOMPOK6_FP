@@ -1,5 +1,29 @@
 # DEV NOTES  
+**UPDATE 16/12/22 - 22:06:00**
+
+Penambahan class dan assets pada base game yang meliputi:
+
 **UPDATE 16/12/22 - 20:37:00**
+Penambahan class dan assets pada base game yang meliputi:
+```
+application:
+  BombDevil.java
+  Grenade.java
+  Explosion.java
+  GunDevil.java
+  Bullet.java
+  
+resources:
+  rezeGrenade.gif
+  explosionGif.gif
+  warehouse.png (update)
+```
+Bug fix meliputi:
+  1. concurrent exception
+  2. boundary game area
+  3. mob spawn kuadran adjustment
+
+>By: Muhammad Rafi Insan Fillah / 5025211169 (Mengz04)
 
 Penambahan class dan assets pada base game yang meliputi:
 ```
