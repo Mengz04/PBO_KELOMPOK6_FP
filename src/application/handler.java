@@ -9,10 +9,13 @@ public class Handler {
 	
 	public LinkedList<GameObject> object = new LinkedList<GameObject>();
 	public ConcurrentLinkedQueue<GameObject> removeTask = new ConcurrentLinkedQueue<GameObject>();//
+	public ConcurrentLinkedQueue<GameObject> addObjTask = new ConcurrentLinkedQueue<GameObject>();
 	
 	public void move() {
 		for(GameObject tempObject : object) {
-			tempObject.move();
+			if(tempObject != null) {
+				tempObject.move();
+			}
 		}
 	}
 	
@@ -27,5 +30,4 @@ public class Handler {
 	public void addRemoveTask(GameObject tempObject) {//
 		removeTask.add(tempObject);
 	}
-	
 }
