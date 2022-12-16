@@ -4,5 +4,7 @@ public enum ID {
 	Player(),
 	Zombie(),
 	Weapon(),
-	Bullet();
+	BloodEXP(),
+	Bullet(),
+	Block();
 }
