@@ -35,53 +35,53 @@ public class Pochita extends GameObject{
 	}
 
 	public void findPlayer() {
-		for(int i=0; i<handler.object.size(); i++) {
-			if(handler.object.get(i).getId() == ID.Player) {
-				tempPlayer = handler.object.get(i);
-				break;
+			for(int i=0; i<handler.object.size(); i++) {
+				if(handler.object.get(i).getId() == ID.Player) {
+					tempPlayer = handler.object.get(i);
+					break;
+				}
 			}
-		}
 	}
 	
 	@Override
 	public void move() {
-		if(orientation == "top-right") {
-			pochitaIcon.setImage(rightTopPochitaIcon);
-			pochitaIcon.setLayoutX(tempPlayer.getX()+50);
-			x = tempPlayer.getX()+50;
-			
-			pochitaIcon.setLayoutY(tempPlayer.getY()-50);
-			y = tempPlayer.getY()-50;
-		}
-		else if(orientation == "bot-right") {
-			pochitaIcon.setImage(rightBotPochitaIcon);
-			pochitaIcon.setLayoutX(tempPlayer.getX()+50);
-			x = tempPlayer.getX()+50;
-			
-			pochitaIcon.setLayoutY(tempPlayer.getY()+50);
-			y = tempPlayer.getY()+50;
-		}
-		else if(orientation == "top-left") {
-			pochitaIcon.setImage(leftTopPochitaIcon);
-			pochitaIcon.setLayoutX(tempPlayer.getX()-50);
-			x = tempPlayer.getX()-50;
-			
-			pochitaIcon.setLayoutY(tempPlayer.getY()-50);
-			y = tempPlayer.getY()-50;
-		}
-		else if(orientation == "bot-left") {
-			pochitaIcon.setImage(leftBotPochitaIcon);
-			pochitaIcon.setLayoutX(tempPlayer.getX()-50);
-			x = tempPlayer.getX()-50;
-			
-			pochitaIcon.setLayoutY(tempPlayer.getY()+50);
-			y = tempPlayer.getY()+50;
-		}
-		time -=1;
-		if(time <= 0) {
-			gamePane.getChildren().remove(pochitaIcon);
-			handler.removeObject(this);
-		}
+			if(orientation == "top-right") {
+				pochitaIcon.setImage(rightTopPochitaIcon);
+				pochitaIcon.setLayoutX(tempPlayer.getX()+50);
+				x = tempPlayer.getX()+50;
+				
+				pochitaIcon.setLayoutY(tempPlayer.getY()-50);
+				y = tempPlayer.getY()-50;
+			}
+			else if(orientation == "bot-right") {
+				pochitaIcon.setImage(rightBotPochitaIcon);
+				pochitaIcon.setLayoutX(tempPlayer.getX()+50);
+				x = tempPlayer.getX()+50;
+				
+				pochitaIcon.setLayoutY(tempPlayer.getY()+50);
+				y = tempPlayer.getY()+50;
+			}
+			else if(orientation == "top-left") {
+				pochitaIcon.setImage(leftTopPochitaIcon);
+				pochitaIcon.setLayoutX(tempPlayer.getX()-50);
+				x = tempPlayer.getX()-50;
+				
+				pochitaIcon.setLayoutY(tempPlayer.getY()-50);
+				y = tempPlayer.getY()-50;
+			}
+			else if(orientation == "bot-left") {
+				pochitaIcon.setImage(leftBotPochitaIcon);
+				pochitaIcon.setLayoutX(tempPlayer.getX()-50);
+				x = tempPlayer.getX()-50;
+				
+				pochitaIcon.setLayoutY(tempPlayer.getY()+50);
+				y = tempPlayer.getY()+50;
+			}
+			time -=1;
+			if(time <= 0) {
+				gamePane.getChildren().remove(pochitaIcon);
+				handler.addRemoveTask(this);
+			}
 	}
 
 	@Override
