@@ -3,9 +3,9 @@ package application;
 import javafx.scene.shape.Rectangle;
 
 public abstract class GameObject {
-	protected float HP;
-	protected float damage;
-	protected int EXP;
+	protected float HP=0;
+	protected float damage=0;
+	protected int EXP=0, EXPCap=0;
 	protected float width, height;
 	protected float x, y;
 	protected ID id;
@@ -18,6 +18,9 @@ public abstract class GameObject {
 		this.width = width;
 		this.height = height;
 		this.EXP = EXP;
+		if(id == ID.Player) {
+			this.EXPCap = 100;
+		}
 		this.id = id;
 	}
 	
@@ -63,6 +66,19 @@ public abstract class GameObject {
 	
 	public int getEXP() {
 		return this.EXP;
+	}
+	public int getEXPCap() {
+		return this.EXPCap;
+	}
+	public void addEXPCap(int value) {
+		this.EXPCap += value;
+	}
+	
+	public void subHP(float value) {
+		this.HP -= value;
+	}
+	public void addHP(float value) {
+		this.HP += value;
 	}
 	
 	public void setEXP(int value) {
