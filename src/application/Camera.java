@@ -12,7 +12,7 @@ public class Camera {
 		findPlayer();
 	}
 	
-	public void findPlayer() { //cari player
+	public void findPlayer() {
 		for(int i=0; i<handler.object.size(); i++) {
 			if(handler.object.get(i).getId() == ID.Player) {
 				tempPlayer = handler.object.get(i);
@@ -21,7 +21,7 @@ public class Camera {
 		}
 	}
 	
-	public void camTick() { //besaran untuk translate anchorPane respective thd. player
+	public void camTick() {
 		if(tempPlayer !=null) {
 			x= (int) tempPlayer.x-GameWindow.WIDTH/2+GameWindow.CHAR_SIZE/2;
 			y= (int) tempPlayer.y-GameWindow.HEIGHT/2+GameWindow.CHAR_SIZE/2;
