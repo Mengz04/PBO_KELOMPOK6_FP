@@ -1,7 +1,8 @@
 # DEV NOTES  
+
 **UPDATE 17/12/22 - 01:10:00**
+
 Penambahan fitur pada game yang meliputi:
-```
   1. Sistem Collision Player dan Mob terhadap Block di Area Permainan
 
 Serta memperbarui GameObject.java dengan:
