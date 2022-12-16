@@ -2,9 +2,6 @@
 **UPDATE 16/12/22 - 22:06:00**
 
 Penambahan class dan assets pada base game yang meliputi:
-
-**UPDATE 16/12/22 - 20:37:00**
-Penambahan class dan assets pada base game yang meliputi:
 ```
 application:
   BombDevil.java
@@ -25,6 +22,7 @@ Bug fix meliputi:
 
 >By: Muhammad Rafi Insan Fillah / 5025211169 (Mengz04)
 
+**UPDATE 16/12/22 - 20:37:00**
 Penambahan class dan assets pada base game yang meliputi:
 ```
 application:
