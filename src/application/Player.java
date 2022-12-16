@@ -10,7 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
 public class Player extends GameObject {
-	//GIF imageIcon assets
 	private ImageView PlayerIcon = new ImageView 
 			("/resources/CSM-idle-right-GIF.gif");
 	private Image leftPlayerIcon= new Image
@@ -23,17 +22,19 @@ public class Player extends GameObject {
 	private AnchorPane gamePane;
 	private Scene gameScene;
 	private Handler handler;
-	private GameObject tempMob;
+	private GameObject tempObj;
 	
 	private Boolean isLeftKeyPressed;
 	private Boolean isRightKeyPressed;
 	private Boolean isUpKeyPressed;
 	private Boolean isDownKeyPressed;
 	
+	private int velx=0, vely=0;
+	
 	private ID id;
 	
 	public Player(float x, float y, ID id, Handler handler, AnchorPane mainPane, Scene mainScene) {
-		super(x, y, 1000, 0, 72, 72, id);
+		super(x, y, 1000, 0, 0, 72, 72, id);
 		this.id = id;
 		this.handler = handler;
 		this.gamePane = mainPane;
@@ -43,7 +44,7 @@ public class Player extends GameObject {
 		createPlayer();
 	}
 	
-	private void createKeyListeners() { //kontrol movement WASD
+	private void createKeyListeners() {
 		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -79,16 +80,24 @@ public class Player extends GameObject {
 		});
 	}
 	
-	private void collide() { //deplete HP jika collide dengan Zombie
+	private void collide() {
 		for(int i=0; i<handler.object.size(); i++) {
 			if(handler.object.get(i).getId() == ID.Zombie) {
-				tempMob = handler.object.get(i);
-				if(getBounds().getBoundsInParent().intersects(tempMob.getBounds().getBoundsInParent())){
+				tempObj = handler.object.get(i);
+				if(getBounds().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
 					this.HP -= 1;
-					//System.out.println(this.HP);
 				}
 			}
+			// collision buat filza
+			/*
+			if(handler.object.get(i).getId() == ID.Block) {
+				tempObj = handler.object.get(i);
+				if(getBounds().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent()) && velx==1){
+					this.HP -= 1;
+				}
+			}*/
 		}
+		
 	}
 	
 	@Override
@@ -98,32 +107,40 @@ public class Player extends GameObject {
 			PlayerIcon.setImage(rightPlayerIcon);
 			PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() + 1.5);
 			this.x += 1.5;
+			this.velx= 1;
 		}
 		if (isUpKeyPressed && !isDownKeyPressed) { //atas
-			PlayerIcon.setImage(rightPlayerIcon);
-			PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -1.5);
-			this.y -= 1.5;
+			if(this.y > -((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2 + height)+GameWindow.HEIGHT/2) {
+				PlayerIcon.setImage(rightPlayerIcon);
+				PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -1.5);
+				this.y -= 1.5;
+				this.vely= 1;
+			}
 		}
 		if (isDownKeyPressed && !isUpKeyPressed) { //bawah
-			PlayerIcon.setImage(rightPlayerIcon);
-			PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +1.5);
-			this.y += 1.5;
+			if(this.y+height < GameWindow.HEIGHT+((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2)-GameWindow.HEIGHT/2) {
+				PlayerIcon.setImage(rightPlayerIcon);
+				PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +1.5);
+				this.y += 1.5;
+				this.vely= -1;
+			}
 		}
 		if (isLeftKeyPressed && !isRightKeyPressed) { //kiri
 			PlayerIcon.setImage(leftPlayerIcon);
 			PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() -1.5);
 			this.x -= 1.5;
+			this.velx=-1;
 		}
 		if (!isRightKeyPressed && !isLeftKeyPressed && !isDownKeyPressed && !isUpKeyPressed) {
 			PlayerIcon.setImage(idlePlayerIcon);
 		}
 	}
 	
-	public Rectangle getBounds() { //return hitbox player
+	public Rectangle getBounds() {
 		return new Rectangle((int)x, (int)y, this.width, this.height);
 	}
 	
-	private void createPlayer() { //inisialisasi playerIcon
+	private void createPlayer() {
 		PlayerIcon.setImage(idlePlayerIcon);
 		PlayerIcon.setFitWidth(this.width);
 		PlayerIcon.setFitHeight(this.height);
