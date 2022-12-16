@@ -1,4 +1,32 @@
 # DEV NOTES 
+**UPDATE 16/12/22**
+Penambahan class pada base game yang meliputi:
+```
+application:
+  BloodEXP.java
+  BLock.java
+```
+Penambahan fitur meliputi:
+  1. BloodEXP yang akan menambah player EXP jika diambil
+  2. Sistem leveling dan mob spawn rate increase berdasarkan level
+
+Bug fix yang meliputi:
+  1. Penerapan ConcurrentLinkedQueue pada handler untuk exception ketika banyak zombie despawn sekaligus
+  2. Formula horizontal area boundary pada movement player
+
+Current bug yang harus diperbaiki:
+  1. Formula vertical area boundary pada movement player
+  2. Spawn zombie yang out of bound
+  3. Collision block dengan player dan zombie
+
+Next target:
+  1. Sistem menu
+  2. Collision system pada block terhadap player dan zombie
+  3. EXP dan HP HUD
+  4. Talent system
+  
+>By: Muhammad Rafi Insan Fillah / 5025211169 (Mengz04)
+
 **UPDATE 11/12/22**
 Upload base game yang meliputi:
 ```
