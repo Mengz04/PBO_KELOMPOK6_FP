@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 public class BloodEXP extends GameObject{
 	private ImageView EXPIcon = new ImageView 
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\blood.gif");
+			("/resources/blood.gif");
 	private AnchorPane gamePane;
 	private Handler handler;
 	private GameObject tempPlayer = null;
