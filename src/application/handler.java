@@ -1,12 +1,14 @@
 package application;
 
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javafx.scene.canvas.GraphicsContext;
 
 public class Handler {
 	
 	public LinkedList<GameObject> object = new LinkedList<GameObject>();
+	public ConcurrentLinkedQueue<GameObject> removeTask = new ConcurrentLinkedQueue<GameObject>();//
 	
 	public void move() {
 		for(GameObject tempObject : object) {
@@ -21,4 +23,9 @@ public class Handler {
 	public void removeObject(GameObject tempObject) {
 		object.remove(tempObject);
 	}
+	
+	public void addRemoveTask(GameObject tempObject) {//
+		removeTask.add(tempObject);
+	}
+	
 }
