@@ -1,123 +1,153 @@
 package application;
 
-import javafx.scene.effect.ColorAdjust;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
-public class Mob extends GameObject {
-	private ImageView mobIcon= new ImageView 
-			("/resources/zombie-walk-right-GIF.gif");
-	private Image leftMobIcon= new Image
-			("/resources/zombie-walk-left-GIF.gif");
-	private Image rightMobIcon = new Image
-			("/resources/zombie-walk-right-GIF.gif");
-	private Image deadMobIcon = new Image
-			("/resources/Zombie-deceased-GIF.gif");
-	private ColorAdjust hitBrightness = new ColorAdjust();	
-	private Boolean hit = false;
+public class Player extends GameObject {
+	private ImageView PlayerIcon = new ImageView 
+			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-idle-right-GIF.gif");
+	private Image leftPlayerIcon= new Image
+			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-walk-left-GIF-1.gif");
+	private Image rightPlayerIcon = new Image
+			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-walk-right-1.gif");
+	private Image idlePlayerIcon= new Image
+			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-idle-right-GIF.gif");
 	
 	private AnchorPane gamePane;
+	private Scene gameScene;
 	private Handler handler;
-	private GameObject tempPlayer = null;
-	private GameObject tempCollide = null;
-	private int despawnTimer = 5000;
+	private GameObject tempObj;
+	
+	private Boolean isLeftKeyPressed;
+	private Boolean isRightKeyPressed;
+	private Boolean isUpKeyPressed;
+	private Boolean isDownKeyPressed;
+	
+	private int velx=0, vely=0;
+	
 	private ID id;
 	
-	private int deathDuration = 50;
-	
-	public Mob(float x, float y, ID id, AnchorPane mainPane, Handler mainHandler) {
-		super(x, y, 500, 0, 0, 50, 64, id);
+	public Player(float x, float y, ID id, Handler handler, AnchorPane mainPane, Scene mainScene) {
+		super(x, y, 1000, 0, 0, 72, 72, id);
 		this.id = id;
+		this.handler = handler;
 		this.gamePane = mainPane;
-		this.handler = mainHandler;
-		hitBrightness.setBrightness(0);
-		createMob();
-		findPlayer();
+		this.gameScene = mainScene;
+		isLeftKeyPressed = isRightKeyPressed = isUpKeyPressed = isDownKeyPressed = false;
+		createKeyListeners();
+		createPlayer();
 	}
 	
-	public void findPlayer() {
-		for(int i=0; i<handler.object.size(); i++) {
-			if(handler.object.get(i).getId() == ID.Player) {
-				tempPlayer = handler.object.get(i);
-				break;
+	private void createKeyListeners() {
+		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.A) {
+					isLeftKeyPressed = true;
+				} else if (event.getCode() == KeyCode.D) {
+					isRightKeyPressed = true;
+				}
+				if (event.getCode() == KeyCode.W) {
+					isUpKeyPressed = true;
+				} else if (event.getCode() == KeyCode.S) {
+					isDownKeyPressed = true;
+				}
+
 			}
-		}
+		});
+
+		gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.A) {
+					isLeftKeyPressed = false;
+				} else if (event.getCode() == KeyCode.D) {
+					isRightKeyPressed = false;
+				}
+				if (event.getCode() == KeyCode.W) {
+					isUpKeyPressed = false;
+				} else if (event.getCode() == KeyCode.S) {
+					isDownKeyPressed = false;
+				}
+
+			}
+		});
 	}
 	
 	private void collide() {
-		hit = false;
 		for(int i=0; i<handler.object.size(); i++) {
-			if(handler.object.get(i).getId() == ID.Weapon) {
-				tempCollide = handler.object.get(i);
-				if(getBounds().getBoundsInParent().intersects(tempCollide.getBounds().getBoundsInParent())){
-					this.HP -= tempCollide.getDamage();
-					hit = true;
+			if(handler.object.get(i).getId() == ID.Zombie) {
+				tempObj = handler.object.get(i);
+				if(getBounds().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
+					this.HP -= 1;
 				}
-			}
+			}/*
+			if(handler.object.get(i).getId() == ID.Block) {
+				tempObj = handler.object.get(i);
+				if(getBounds().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent()) && velx==1){
+					this.HP -= 1;
+				}
+			}*/
 		}
+		
 	}
 	
 	@Override
 	public void move() {
-		if(HP<=0 || despawnTimer <=0) { //mati
-			hitBrightness.setBrightness(0);
-			mobIcon.setEffect(hitBrightness);
-			mobIcon.setImage(deadMobIcon);
-			if(deathDuration>0) deathDuration--;
-			else{
-				//tempPlayer.addEXP(5);
-				//handler.addObject(new BloodEXP(this.x+this.width/2, this.y+this.height, id.BloodEXP, this.gamePane, this.handler));
-				gamePane.getChildren().remove(mobIcon);
-				//handler.removeObject(this);
-				handler.addRemoveTask(this);
+		collide();
+		if (isRightKeyPressed && !isLeftKeyPressed) { //kanan
+			PlayerIcon.setImage(rightPlayerIcon);
+			if(this.x < (GameWindow.BGWIDTH- width)/2) {
+				PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() + 1.5);
+				this.x += 1.5;
+				this.velx= 1;
 			}
 		}
-		else { //hidup
-			collide();
-			
-			if(hit) {
-				hitBrightness.setBrightness(0.7);
-				mobIcon.setEffect(hitBrightness);
-			}
-			else {
-				hitBrightness.setBrightness(0);
-				mobIcon.setEffect(hitBrightness);
-			}
-			if(tempPlayer.x-this.x >0) { //kanan
-				mobIcon.setImage(rightMobIcon);
-				mobIcon.setLayoutX(mobIcon.getLayoutX() + 0.6);
-				this.x += 0.6;
-			}
-			if(tempPlayer.y-this.y >0) { //bawah
-				mobIcon.setImage(rightMobIcon);
-				mobIcon.setLayoutY(mobIcon.getLayoutY() + 0.6);
-				this.y += 0.6;
-			}
-			if(tempPlayer.y-this.y <0) { //atas
-				mobIcon.setImage(rightMobIcon);
-				mobIcon.setLayoutY(mobIcon.getLayoutY() - 0.6);
-				this.y -= 0.6;
-			}
-			if(tempPlayer.x-this.x <0) { //kiri
-				mobIcon.setImage(leftMobIcon);
-				mobIcon.setLayoutX(mobIcon.getLayoutX() - 0.6);
-				this.x -= 0.6;
+		if (isUpKeyPressed && !isDownKeyPressed) { //atas
+			PlayerIcon.setImage(rightPlayerIcon);
+			if(this.y > -((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2 + height)+GameWindow.HEIGHT/2) {
+				PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -1.5);
+				this.y -= 1.5;
+				this.vely= 1;
 			}
 		}
-		despawnTimer--;
+		if (isDownKeyPressed && !isUpKeyPressed) { //bawah
+			PlayerIcon.setImage(rightPlayerIcon);
+			if(this.y+height < GameWindow.HEIGHT+((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2)-GameWindow.HEIGHT/2) {
+				PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +1.5);
+				this.y += 1.5;
+				this.vely= -1;
+			}
+		}
+		if (isLeftKeyPressed && !isRightKeyPressed) { //kiri
+			PlayerIcon.setImage(leftPlayerIcon);
+			if(this.x > -((GameWindow.BGWIDTH)/2 -GameWindow.WIDTH)-width/2) {
+				PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() -1.5);
+				this.x -= 1.5;
+				this.velx=-1;
+			}
+		}
+		if (!isRightKeyPressed && !isLeftKeyPressed && !isDownKeyPressed && !isUpKeyPressed) {
+			PlayerIcon.setImage(idlePlayerIcon);
+		}
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle((int)this.x, (int)this.y, this.width, this.height);
+		return new Rectangle((int)x, (int)y, this.width, this.height);
 	}
 	
-	private void createMob() {
-		mobIcon.setFitWidth(this.width);
-		mobIcon.setFitHeight(this.height);
-		mobIcon.setLayoutX(this.x);
-		mobIcon.setLayoutY(this.y);
-		gamePane.getChildren().add(mobIcon);
+	private void createPlayer() {
+		PlayerIcon.setImage(idlePlayerIcon);
+		PlayerIcon.setFitWidth(this.width);
+		PlayerIcon.setFitHeight(this.height);
+		PlayerIcon.setLayoutX(this.x);
+		PlayerIcon.setLayoutY(this.y);
+		gamePane.getChildren().add(PlayerIcon);
 	}
 }
