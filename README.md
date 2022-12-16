@@ -1,5 +1,6 @@
 # DEV NOTES 
 **UPDATE 16/12/22**
+
 Penambahan class pada base game yang meliputi:
 ```
 application:
