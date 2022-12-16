@@ -33,6 +33,11 @@ public class Player extends GameObject {
 	private Boolean isUpKeyPressed;
 	private Boolean isDownKeyPressed;
 	
+	private Boolean restrictRight = false;
+	private Boolean restrictLeft = false;
+	private Boolean restrictUp = false;
+	private Boolean restrictDown = false;
+	
 	private int velx=0, vely=0;
 	
 	private ID id;
@@ -92,6 +97,29 @@ public class Player extends GameObject {
 						this.HP -= 1;
 					}
 				}
+				else if(handler.object.get(i).getId()== ID.Block) {
+					tempObj = handler.object.get(i);
+					if(GB1().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
+						if(velx>0) {
+							velx=0;
+							restrictRight = true;
+						}else if(velx<0) {
+							velx=0;
+							restrictLeft = true;
+						}
+					}else {restrictRight = false; restrictLeft = false;}
+					
+					if(GB2().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
+						if(vely>0) {
+							vely=0;
+							restrictUp = true;
+						}else if(vely<0) {
+							vely=0;
+							restrictDown = true;
+						}
+					}else {restrictUp = false; restrictDown = false;}
+					
+				}
 			}
 	}
 	
@@ -101,7 +129,8 @@ public class Player extends GameObject {
 			EXPBar.setWidth(EXP*1540/EXPCap);
 			EXPBG.toFront();
 			EXPBar.toFront();
-			if (isRightKeyPressed && !isLeftKeyPressed) { //kanan
+			collide();
+			if (isRightKeyPressed && !isLeftKeyPressed && !restrictRight) { //kanan
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.x < (GameWindow.BGWIDTH- width)/2) {
 					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() + 1.5);
@@ -110,10 +139,10 @@ public class Player extends GameObject {
 					HPBG.setX(this.x);
 					EXPBG.setX(this.x-732);
 					EXPBar.setX(this.x-732);
-					this.velx= 1;
+					this.velx= 4;
 				}
 			}
-			if (isUpKeyPressed && !isDownKeyPressed) { //atas
+			if (isUpKeyPressed && !isDownKeyPressed && !restrictUp) { //atas
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.y > -((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2 + height)+GameWindow.HEIGHT/2) {
 					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -1.5);
@@ -122,10 +151,10 @@ public class Player extends GameObject {
 					HPBG.setY(this.y-15);
 					EXPBG.setY(this.y+380);
 					EXPBar.setY(this.y+380+5);
-					this.vely= 1;
+					this.vely= 4;
 				}
 			}
-			if (isDownKeyPressed && !isUpKeyPressed) { //bawah
+			if (isDownKeyPressed && !isUpKeyPressed && !restrictDown) { //bawah
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.y+height < GameWindow.HEIGHT+((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2)-GameWindow.HEIGHT/2) {
 					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +1.5);
@@ -134,10 +163,10 @@ public class Player extends GameObject {
 					HPBG.setY(this.y-15);
 					EXPBG.setY(this.y+380);
 					EXPBar.setY(this.y+380+5);
-					this.vely= -1;
+					this.vely= -4;
 				}
 			}
-			if (isLeftKeyPressed && !isRightKeyPressed) { //kiri
+			if (isLeftKeyPressed && !isRightKeyPressed && !restrictLeft) { //kiri
 				PlayerIcon.setImage(leftPlayerIcon);
 				if(this.x > -((GameWindow.BGWIDTH)/2 -GameWindow.WIDTH)-width/2) {
 					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() -1.5);
@@ -146,17 +175,23 @@ public class Player extends GameObject {
 					HPBG.setX(this.x);
 					EXPBG.setX(this.x-732);
 					EXPBar.setX(this.x-732);
-					this.velx=-1;
+					this.velx=-4;
 				}
 			}
 			if (!isRightKeyPressed && !isLeftKeyPressed && !isDownKeyPressed && !isUpKeyPressed) {
 				PlayerIcon.setImage(idlePlayerIcon);
 			}
-			collide();
 	}
 	
 	public Rectangle getBounds() {
 		return new Rectangle((int)x, (int)y, this.width, this.height);
+	}
+	
+	public Rectangle GB1() {
+		return new Rectangle((int)x+velx/2, (int)y+2, this.width, this.height-4);
+	}
+	public Rectangle GB2() {
+		return new Rectangle((int)x+2, (int)y-vely/2, this.width-4, this.height);
 	}
 	
 	private void createPlayer() {
