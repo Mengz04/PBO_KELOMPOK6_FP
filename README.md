@@ -1,4 +1,15 @@
 # DEV NOTES  
+**UPDATE 17/12/22 - 01:10:00**
+Penambahan fitur pada game yang meliputi:
+```
+  1. Sistem Collision Player dan Mob terhadap Block di Area Permainan
+
+Serta memperbarui GameObject.java dengan:
+  1. Menambah variabel EXPCap
+  2. Melakukan penetapan nilai EXPCap player pada konstruktor
+
+>by Ahda Filza Ghaffaru / 5025211144 (Ahdaaa)
+
 **UPDATE 16/12/22 - 22:06:00**
 
 Penambahan class dan assets pada base game yang meliputi:
