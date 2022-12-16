@@ -1,4 +1,33 @@
-# DEV NOTES 
+# DEV NOTES  
+**UPDATE 16/12/22 - 20:37:00**
+
+Penambahan class dan assets pada base game yang meliputi:
+```
+application:
+  MainMenuWindow.java  
+  MenuButton.java
+  
+resources:
+  buttonLong_beige_pressed.png  
+  buttonLong_beige.png
+  chainsawman_bg.png
+```
+Penambahan fitur meliputi:
+  1. Main menu yang berisi tombol start, credit, dan exit  
+
+Current bug yang harus diperbaiki:
+  1. Formula vertical area boundary pada movement player
+  2. Spawn zombie yang out of bound
+  3. Collision block dengan player dan zombie
+
+Next target:
+  1. Collision system pada block terhadap player dan zombie  
+  2. EXP dan HP HUD  
+  3. Talent system  
+  4. Menambah Credit Subscene
+  
+>By: Aurelio Killian Lexi Verrill / 5025211126 (aurelioklv)
+
 **UPDATE 16/12/22**
 
 Penambahan class dan assets pada base game yang meliputi:
