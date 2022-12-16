@@ -61,6 +61,13 @@ public class MainMenuWindow {
 		MenuButton starButton = new MenuButton("START");
 		addMenuButtons(starButton);
 		
+		starButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				//TODO link ke GameWindow
+			}
+		});
 	}
 
 	private void createCreditButton() {
@@ -72,6 +79,15 @@ public class MainMenuWindow {
 	private void createExitButton() {
 		MenuButton exitButton = new MenuButton("EXIT");
 		addMenuButtons(exitButton);
+		
+		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				mainStage.close();
+			}
+
+		});
 	}
 
 	private void createBackground() {
