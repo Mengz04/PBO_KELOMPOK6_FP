@@ -1,11 +1,16 @@
 # DEV NOTES 
 **UPDATE 16/12/22**
 
-Penambahan class pada base game yang meliputi:
+Penambahan class dan assets pada base game yang meliputi:
 ```
 application:
   BloodEXP.java
   BLock.java
+  
+resources:
+  blood.gif
+  container-green-horizontal.png
+  container-green-vertical.png
 ```
 Penambahan fitur meliputi:
   1. BloodEXP yang akan menambah player EXP jika diambil
