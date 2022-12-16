@@ -29,6 +29,7 @@ Next target:
 >By: Muhammad Rafi Insan Fillah / 5025211169 (Mengz04)
 
 **UPDATE 11/12/22**
+
 Upload base game yang meliputi:
 ```
 application (base game package):
