@@ -10,6 +10,7 @@ public class BloodEXP extends GameObject{
 	private AnchorPane gamePane;
 	private Handler handler;
 	private GameObject tempPlayer = null;
+	private int despawnTime = 500;
 	
 	public BloodEXP(float x, float y, ID id, AnchorPane gamePane, Handler handler) {
 		super(x, y, 0, 0, 0, 15, 25, id);
@@ -37,6 +38,11 @@ public class BloodEXP extends GameObject{
 			tempPlayer.addEXP(5);
 			gamePane.getChildren().remove(EXPIcon);
 			handler.removeTask.add(this);
+		}
+		despawnTime--;
+		if(despawnTime<=0) {
+			gamePane.getChildren().remove(EXPIcon);
+			handler.addRemoveTask(this);
 		}
 	}
 
