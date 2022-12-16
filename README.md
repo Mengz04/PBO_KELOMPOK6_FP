@@ -19,6 +19,7 @@ Bug fix meliputi:
   1. concurrent exception
   2. boundary game area
   3. mob spawn kuadran adjustment
+  4. EXPBar dan leveling system
 
 >By: Muhammad Rafi Insan Fillah / 5025211169 (Mengz04)
 
