@@ -62,7 +62,7 @@ public class GameWindow{
 	private void initializeCanvas() { //setup window, canvas, dll
 		gamePane = new AnchorPane();
 		ImageView backgroundImage = new ImageView
-				("D://Kuliah//sems 3//PBO//gem//attempt2fx//src//resources//warehouse.png");
+				("/resources/warehouse.png");
 		backgroundImage.setFitWidth(BGWIDTH);
 		backgroundImage.setFitHeight(BGHEIGHT);
 		backgroundImage.setLayoutX(-((backgroundImage.getFitWidth()/2)-WIDTH/2));
