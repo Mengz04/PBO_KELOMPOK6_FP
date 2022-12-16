@@ -8,13 +8,13 @@ import javafx.scene.shape.Rectangle;
 
 public class Mob extends GameObject {
 	private ImageView mobIcon= new ImageView 
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\zombie-walk-right-GIF.gif");
+			("/resources/zombie-walk-right-GIF.gif");
 	private Image leftMobIcon= new Image
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\zombie-walk-left-GIF.gif");
+			("/resources/zombie-walk-left-GIF.gif");
 	private Image rightMobIcon = new Image
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\zombie-walk-right-GIF.gif");
+			("/resources/zombie-walk-right-GIF.gif");
 	private Image deadMobIcon = new Image
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\Zombie-deceased-GIF.gif");
+			("/resources/Zombie-deceased-GIF.gif");
 	private ColorAdjust hitBrightness = new ColorAdjust();	
 	private Boolean hit = false;
 	

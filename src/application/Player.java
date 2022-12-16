@@ -11,13 +11,13 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends GameObject {
 	private ImageView PlayerIcon = new ImageView 
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-idle-right-GIF.gif");
+			("/resources/CSM-idle-right-GIF.gif");
 	private Image leftPlayerIcon= new Image
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-walk-left-GIF-1.gif");
+			("/resources/CSM-walk-left-GIF-1.gif");
 	private Image rightPlayerIcon = new Image
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-walk-right-1.gif");
+			("/resources/CSM-walk-right-1.gif");
 	private Image idlePlayerIcon= new Image
-			("D:\\Kuliah\\sems 3\\PBO\\gem\\attempt2fx\\src\\resources\\CSM-idle-right-GIF.gif");
+			("/resources/CSM-idle-right-GIF.gif");
 	
 	private AnchorPane gamePane;
 	private Scene gameScene;

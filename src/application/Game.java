@@ -5,12 +5,12 @@ import javafx.stage.Stage;
 
 public class Game extends Application {
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
 		try {
-			GameWindow window = new GameWindow();
-			primaryStage = window.getMainStage();
-			primaryStage.setTitle("Zombie Game");
-			primaryStage.show();
+			MainMenuWindow window = new MainMenuWindow();
+			stage = window.getMainStage();
+			stage.setTitle("Zombie Game");
+			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
