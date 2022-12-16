@@ -6,5 +6,7 @@ public enum ID {
 	Weapon(),
 	BloodEXP(),
 	Bullet(),
-	Block();
+	Block(),
+	Talent(),
+	Grenade();
 }
