@@ -32,6 +32,8 @@ public class GameWindow{
 	private GameObject tempPlayer = null;
 	private GameObject tempMob = null;
 	
+	private Stage mainStage;
+	
 	private Boolean isRunning = false;
 	
 	private AnimationTimer gameTimer;
@@ -45,10 +47,16 @@ public class GameWindow{
 	private int spawner = spawnInterval;
 	
 	public GameWindow() { //new game base instruction
-		isRunning = true;
 		initializeCanvas();
+	}
+	
+	public void createNewGame(Stage mainStage) {
+		this.mainStage = mainStage;
+		this.mainStage.hide();
+		isRunning = true;
 		createObjects();
 		createGameLoop();
+		gameStage.show();
 	}
 	
 	private void createObjects() { //spawn objects
@@ -81,6 +89,9 @@ public class GameWindow{
 			public void handle(long now) { //Game tick method
 				if(tempPlayer.HP <= 0) { // player mati
 					isRunning = false;
+					gameStage.close();
+					gameTimer.stop();
+					mainStage.show();
 				}
 				if(isRunning) {	
 					//System.out.println(tempPlayer.HP);
@@ -171,5 +182,6 @@ public class GameWindow{
 	public Stage getMainStage() {
 		return gameStage;
 	}
+
 		
 }

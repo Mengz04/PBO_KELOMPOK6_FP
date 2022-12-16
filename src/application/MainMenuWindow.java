@@ -65,7 +65,8 @@ public class MainMenuWindow {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				//TODO link ke GameWindow
+				GameWindow game = new GameWindow();
+				game.createNewGame(mainStage);
 			}
 		});
 	}
