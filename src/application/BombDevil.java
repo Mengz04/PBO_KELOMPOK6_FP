@@ -7,7 +7,8 @@ public class BombDevil extends GameObject{
 	private Handler handler;
 	private GameObject tempPlayer = null;
 	private AnchorPane gamePane;
-	private int cooldown=800;
+	private int cooldown=1000;
+	private int cooldownCount= cooldown;
 	
 	public BombDevil(float x, float y, ID id, Handler handler, AnchorPane gamePane) {
 		super(x, y, 0, 0, 0, 0, 0, id);
@@ -32,11 +33,17 @@ public class BombDevil extends GameObject{
 		this.x = tempPlayer.x+36;
 		this.y = tempPlayer.y+36;
 		
-		if(cooldown<=0) {
+		if(cooldownCount<=0) {
 			handler.addObjTask.add(new Grenade(x, y, ID.Grenade, gamePane, handler));
-			cooldown = 800;
+			cooldownCount = cooldown;
 		}
-		cooldown--;
+		cooldownCount--;
+	}
+	
+	public void cdDecrease(int val) {
+		if(cooldown>= 300) {
+			cooldown -= val;
+		}
 	}
 
 	@Override
