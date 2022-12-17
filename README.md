@@ -3,7 +3,7 @@
 **UPDATE 17/12/22 - 09:26:00**
 
 Penambahan fitur pada game yang meliputi:
-  1. Sistem drop reward ketika zombie mati dengan rate 5% menggunakan RNG
+  1. Sistem drop reward ketika zombie mati dengan rate 10% menggunakan RNG
   2. Upgrade talent dan buf via drop reward
   3. Penyesuaian beberapa class perihal concurrentLinkedQueue
   
