@@ -39,6 +39,7 @@ public class GameWindow{
 	private Stage gameStage;
 	private Stage mainStage;
 	private GameObject tempPlayer = null;
+	private Player playerLevelUtil = null;
 	private GameObject tempMob = null;
 	private KeyInput inputKey;
 	
@@ -52,7 +53,6 @@ public class GameWindow{
 	private Camera cam;
 	private int NAcooldownBUF = 100;
 	private int NAcooldown = NAcooldownBUF;
-	private int level = 0;
 	private int spawnInterval = 600;
 	private int spawner = spawnInterval;
 	private int gacha;
@@ -77,7 +77,8 @@ public class GameWindow{
 		handler = new Handler();
 		inputKey = new KeyInput(gameScene);
 		handler.addObject(new Block(0, 0, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
-		tempPlayer = new Player((WIDTH/2)-(CHAR_SIZE/2), (HEIGHT/2)-(CHAR_SIZE/2), ID.Player, handler, gamePane, gameScene, inputKey);
+		playerLevelUtil = new Player((WIDTH/2)-(CHAR_SIZE/2), (HEIGHT/2)-(CHAR_SIZE/2), ID.Player, handler, gamePane, gameScene, inputKey);
+		tempPlayer = playerLevelUtil;
 		handler.addObject(tempPlayer);
 		cam = new Camera(0,0, handler);
 	}
@@ -245,7 +246,7 @@ public class GameWindow{
 	private void checkLevel() {
 		if(tempPlayer.getEXPCap() == tempPlayer.getEXP()) { //level up condition
 			tempPlayer.addEXPCap(50);
-			level++;
+			PlayerLevelUtil.level++;
 			tempPlayer.setEXP(0);
 			if(spawnInterval>190) { //cap minimum spawnInterval = 200
 				spawnInterval -=10;
