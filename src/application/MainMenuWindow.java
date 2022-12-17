@@ -112,7 +112,10 @@ public class MainMenuWindow {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				if(!creditSubSceneHidden)creditSubScene.moveSubscene();
+				if(!creditSubSceneHidden) {
+					creditSubSceneHidden = !creditSubSceneHidden;
+					creditSubScene.moveSubscene();
+				}
 				GameWindow game = new GameWindow();
 				game.createNewGame(mainStage);
 			}
