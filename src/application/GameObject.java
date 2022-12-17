@@ -8,6 +8,7 @@ public abstract class GameObject {
 	protected int EXP=0, EXPCap=0;
 	protected float width, height;
 	protected float x, y;
+	protected float speed;
 	protected ID id;
 	
 	public GameObject(float x, float y, float HP, float damage, int EXP, float width, float height, ID id) {
@@ -20,6 +21,7 @@ public abstract class GameObject {
 		this.EXP = EXP;
 		if(id == ID.Player) {
 			this.EXPCap = 100;
+			this.speed = 0;
 		}
 		this.id = id;
 	}
@@ -63,7 +65,9 @@ public abstract class GameObject {
 	public void addEXP(int value) {
 		this.EXP += value;
 	}
-	
+	public void addSpeed(int value) {
+		this.speed += value;
+	}
 	public int getEXP() {
 		return this.EXP;
 	}
