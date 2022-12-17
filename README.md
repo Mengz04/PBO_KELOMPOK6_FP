@@ -2,10 +2,19 @@
 
 **UPDATE 17/12/22 - 09:26:00**
 
+Penambahan class dan assets yg meliputi
+```
+application:
+  KeyInput.java
+  DropItem.java
+resources:
+  crateDrop.png
+```
 Penambahan fitur pada game yang meliputi:
   1. Sistem drop reward ketika zombie mati dengan rate 10% menggunakan RNG
   2. Upgrade talent dan buf via drop reward
   3. Penyesuaian beberapa class perihal concurrentLinkedQueue
+  4. Penyesuaian mekanik player movement dengan KeyInput.java
   
 >By: Muhammad Rafi Insan Fillah / 5025211169 (Mengz04)
 
