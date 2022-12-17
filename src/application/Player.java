@@ -20,9 +20,12 @@ public class Player extends GameObject {
 			("/resources/CSM-walk-right-1.gif");
 	private Image idlePlayerIcon= new Image
 			("/resources/CSM-idle-right-GIF.gif");
-	private Label notif = new Label("");
+	private Label levelLabel = new Label("");
+	private ImageView bloodSplat = new ImageView
+			("/resources/bloodSplat.png");
 	
 	private float MaxHP= 1000;
+	public int level =1;
 	private Rectangle HPBar, HPBG, EXPBar, EXPBG;
 	
 	private AnchorPane gamePane;
@@ -44,7 +47,6 @@ public class Player extends GameObject {
 	private int velx=0, vely=0;
 	private int speedDuration = 500;
 	private int invincibleDuration = 500;
-	private int notifDuration = 800;
 	
 	private ID id;
 	
@@ -124,6 +126,10 @@ public class Player extends GameObject {
 			EXPBar.setWidth(EXP*1540/EXPCap);
 			EXPBG.toFront();
 			EXPBar.toFront();
+			bloodSplat.toFront();
+			levelLabel.toFront();
+			levelLabel.setText(String.valueOf(level));
+			
 			collide();
 			
 			//speed buf control
@@ -180,6 +186,10 @@ public class Player extends GameObject {
 			HPBG.setY(this.y-15);
 			EXPBG.setY(this.y+380);
 			EXPBar.setY(this.y+380+5);
+			levelLabel.setLayoutX(this.x-750+60);
+			levelLabel.setLayoutY(this.y+270+60);
+			bloodSplat.setLayoutX(this.x-750);
+			bloodSplat.setLayoutY(this.y+270);
 			if (!inputKey.isRightKeyPressed && !inputKey.isLeftKeyPressed && !inputKey.isDownKeyPressed && !inputKey.isUpKeyPressed) {
 				PlayerIcon.setImage(idlePlayerIcon);
 			}
@@ -215,10 +225,27 @@ public class Player extends GameObject {
 		EXPBar = new Rectangle(this.x-732, this.y+380+5, 1540, 25);
 		EXPBar.setFill(Color.RED);
 		
+		levelLabel.setText(String.valueOf(level));
+		levelLabel.setAlignment(Pos.BASELINE_LEFT);
+		levelLabel.setTextFill(Color.WHITE);
+		levelLabel.setFont(new Font("Arial", 50));
+		levelLabel.setPrefWidth(200);
+		levelLabel.setPrefHeight(80);
+		levelLabel.setLayoutX(this.x-750+60);
+		levelLabel.setLayoutY(this.y+270+60);
+		
+		
+		bloodSplat.setFitWidth(200);
+		bloodSplat.setFitHeight(200);
+		bloodSplat.setLayoutX(this.x-750);
+		bloodSplat.setLayoutY(this.y+270);
+		
 		gamePane.getChildren().add(PlayerIcon);
 		gamePane.getChildren().add(HPBG);
 		gamePane.getChildren().add(HPBar);
 		gamePane.getChildren().add(EXPBG);
 		gamePane.getChildren().add(EXPBar);
+		gamePane.getChildren().add(bloodSplat);
+		gamePane.getChildren().add(levelLabel);
 	}
 }
