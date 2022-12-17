@@ -119,13 +119,15 @@ public class GameWindow{
 						tempMob = handler.removeTask.peek();
 						gacha = getRandomNumber(1,10);
 						if(gacha == 1) {
-							gacha = getRandomNumber(1,5);
+							gacha = getRandomNumber(1,6);
 							switch (gacha) {
 								case 1: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "health")); break;
 								case 2: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "speed"));break;
-								case 3: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "invincibility"));break;
+								case 3: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "BDevil"));break;
 								case 4: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "GDevil"));break;
-								default: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "BDevil"));
+								case 5: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "invincibility"));break;
+
+								default: handler.addObjTask.add(new DropItem(tempMob.x+tempMob.width/2 -25, tempMob.y+tempMob.height/2, ID.Drop, gamePane, handler, "health"));
 							}
 						}
 						handler.addObject(new BloodEXP(tempMob.x+tempMob.width/2, tempMob.y+tempMob.height, ID.BloodEXP, gamePane, handler));

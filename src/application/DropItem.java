@@ -60,9 +60,11 @@ public class DropItem extends GameObject{
 		switch(type) {
 		case "health": dropLabel.setText("Health +100"); break;
 		case "speed": dropLabel.setText("Speed +1"); break;
-		case "invincibility": dropLabel.setText("Invincibility"); break;
+		case "BDevil": dropLabel.setText("Bomb Devil Upgrade"); break;
 		case "GDevil": dropLabel.setText("Gun Devil Upgrade"); break;
-		default: dropLabel.setText("Bomb Devil Upgrade");
+		case "invincibility": dropLabel.setText("Invincibility"); break;
+		
+		default: dropLabel.setText("Health +100");
 		}
 		
 		dropLabel.setAlignment(Pos.CENTER);
