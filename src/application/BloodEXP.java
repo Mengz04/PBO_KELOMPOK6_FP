@@ -10,7 +10,7 @@ public class BloodEXP extends GameObject{
 	private AnchorPane gamePane;
 	private Handler handler;
 	private GameObject tempPlayer = null;
-	private int despawnTime = 500;
+	private int despawnTime = 1500;
 	
 	public BloodEXP(float x, float y, ID id, AnchorPane gamePane, Handler handler) {
 		super(x, y, 0, 0, 0, 15, 25, id);
