@@ -16,8 +16,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
 
 public class MainMenuWindow {
-	public static final int WIDTH = 1920;
-	public static final int HEIGHT = 1080;
+	private static final int WIDTH = 1920;
+	private static final int HEIGHT = 1080;
 	
 	private AnchorPane mainPane;
 	private Scene mainScene;
