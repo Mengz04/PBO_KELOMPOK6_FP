@@ -246,7 +246,7 @@ public class GameWindow{
 	private void checkLevel() {
 		if(tempPlayer.getEXPCap() == tempPlayer.getEXP()) { //level up condition
 			tempPlayer.addEXPCap(50);
-			PlayerLevelUtil.level++;
+			playerLevelUtil.level++;
 			tempPlayer.setEXP(0);
 			if(spawnInterval>190) { //cap minimum spawnInterval = 200
 				spawnInterval -=10;
