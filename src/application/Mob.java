@@ -25,12 +25,7 @@ public class Mob extends GameObject {
 	private int despawnTimer = 5000;
 	private ID id;
 	
-	private int velx=0, vely=0;
-	private Boolean restrictRight = false;
-	private Boolean restrictLeft = false;
-	private Boolean restrictUp = false;
-	private Boolean restrictDown = false;
-	
+	private int velx=0, vely=0;	
 	private int deathDuration = 50;
 	
 	public Mob(float x, float y, ID id, AnchorPane mainPane, Handler mainHandler) {
@@ -72,23 +67,23 @@ public class Mob extends GameObject {
 					tempCollide = handler.object.get(i);
 					if(GB1().getBoundsInParent().intersects(tempCollide.getBounds().getBoundsInParent())){
 						if(velx>0) {
-							velx=0;
-							restrictRight = true;
+							this.x = tempCollide.getX() - this.width;
+							this.velx = 0;
 						}else if(velx<0) {
+							this.x = tempCollide.getX() + tempCollide.getWidth();
 							velx=0;
-							restrictLeft = true;
 						}
-					}else {restrictRight = false; restrictLeft = false;}
+					}
 					
 					if(GB2().getBoundsInParent().intersects(tempCollide.getBounds().getBoundsInParent())){
 						if(vely>0) {
+							this.y = tempCollide.getY() + tempCollide.getHeight();
 							vely=0;
-							restrictUp = true;
 						}else if(vely<0) {
+							this.y = tempCollide.getY() - this.height;
 							vely=0;
-							restrictDown = true;
 						}
-					}else {restrictUp = false; restrictDown = false;}
+					}
 					
 				}
 			}
@@ -107,31 +102,29 @@ public class Mob extends GameObject {
 				}
 			}
 			else { //hidup
-				collide();
-				if(tempPlayer.x-this.x >0 && !restrictRight) { //kanan
+				if(tempPlayer.x-this.x >0) { //kanan
 					mobIcon.setImage(rightMobIcon);
-					mobIcon.setLayoutX(mobIcon.getLayoutX() + 0.6);
 					this.x += 0.6;
 					velx = 4;
 				}
-				if(tempPlayer.y-this.y >0 && !restrictDown) { //bawah
+				if(tempPlayer.y-this.y >0) { //bawah
 					mobIcon.setImage(rightMobIcon);
-					mobIcon.setLayoutY(mobIcon.getLayoutY() + 0.6);
 					this.y += 0.6;
 					vely = -4;
 				}
-				if(tempPlayer.y-this.y <0 && !restrictUp) { //atas
+				if(tempPlayer.y-this.y <0) { //atas
 					mobIcon.setImage(rightMobIcon);
-					mobIcon.setLayoutY(mobIcon.getLayoutY() - 0.6);
 					this.y -= 0.6;
 					vely = 4;
 				}
-				if(tempPlayer.x-this.x <0 && !restrictLeft) { //kiri
+				if(tempPlayer.x-this.x <0) { //kiri
 					mobIcon.setImage(leftMobIcon);
-					mobIcon.setLayoutX(mobIcon.getLayoutX() - 0.6);
 					this.x -= 0.6;
 					velx = -4;
 				}
+				mobIcon.setLayoutX(this.x);
+				mobIcon.setLayoutY(this.y);
+				collide();
 				if(this != null) {
 					if(hit) {
 						hitBrightness.setBrightness(0.7);
@@ -151,10 +144,10 @@ public class Mob extends GameObject {
 	}
 	
 	public Rectangle GB1() {
-		return new Rectangle((int)x+velx/2, (int)y+2, this.width, this.height-4);
+		return new Rectangle((int)x+velx, (int)y+5, this.width, this.height-10);
 	}
 	public Rectangle GB2() {
-		return new Rectangle((int)x+2, (int)y-vely/2, this.width-4, this.height);
+		return new Rectangle((int)x+5, (int)y-vely, this.width-10, this.height);
 	}
 	
 	private void createMob() {
