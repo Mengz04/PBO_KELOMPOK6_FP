@@ -151,7 +151,7 @@ public class GameWindow{
 					while(!handler.removeTask.isEmpty()) {
 						if(handler.removeTask.peek().getId()== ID.Zombie) {
 							tempMob = handler.removeTask.peek();
-							gacha = getRandomNumber(1,20);
+							gacha = getRandomNumber(1,10);
 							if(gacha == 1) {
 								gacha = getRandomNumber(1,5);
 								switch (gacha) {
