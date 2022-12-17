@@ -8,7 +8,8 @@ public class GunDevil extends GameObject{
 	private Handler handler;
 	private GameObject tempPlayer = null;
 	private AnchorPane gamePane;
-	private int cooldown=300;
+	private int cooldown=500;
+	private int cooldownCount=cooldown;
 	
 	public GunDevil(float x, float y, ID id, Handler handler, AnchorPane gamePane) {
 		super(x, y, 0, 0, 0, 0, 0, id);
@@ -33,7 +34,7 @@ public class GunDevil extends GameObject{
 		this.x = tempPlayer.x+36;
 		this.y = tempPlayer.y+36;
 		
-		if(cooldown<=0) {
+		if(cooldownCount<=0) {
 			handler.addObjTask.add(new Bullet(x, y, ID.Bullet, gamePane, handler, "right"));
 			handler.addObjTask.add(new Bullet(x, y, ID.Bullet, gamePane, handler, "left"));
 			handler.addObjTask.add(new Bullet(x, y, ID.Bullet, gamePane, handler, "up"));
@@ -42,9 +43,15 @@ public class GunDevil extends GameObject{
 			handler.addObjTask.add(new Bullet(x, y, ID.Bullet, gamePane, handler, "right-down"));
 			handler.addObjTask.add(new Bullet(x, y, ID.Bullet, gamePane, handler, "left-up"));
 			handler.addObjTask.add(new Bullet(x, y, ID.Bullet, gamePane, handler, "left-down"));
-			cooldown = 500;
+			cooldownCount = cooldown;
 		}
-		cooldown--;
+		cooldownCount--;
+	}
+	
+	public void cdDecrease(int val) {
+		if(cooldown>=250) {
+			cooldown -= val;
+		}
 	}
 
 	@Override
