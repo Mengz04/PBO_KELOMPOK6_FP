@@ -23,7 +23,7 @@ public class MainMenuWindow {
 	private Scene mainScene;
 	private Stage mainStage;
 	
-	private static final int MENU_BUTTONS_START_X = 1700;
+	private static final int MENU_BUTTONS_START_X = 1400;
 	private static final int MENU_BUTTONS_START_Y = 150;
 	
 	List<MenuButton> menuButtons;
