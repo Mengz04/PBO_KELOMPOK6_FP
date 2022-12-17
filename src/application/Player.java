@@ -2,6 +2,7 @@ package application;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -19,6 +20,7 @@ public class Player extends GameObject {
 			("/resources/CSM-walk-right-1.gif");
 	private Image idlePlayerIcon= new Image
 			("/resources/CSM-idle-right-GIF.gif");
+	private Label notif = new Label("");
 	
 	private float MaxHP= 1000;
 	private Rectangle HPBar, HPBG, EXPBar, EXPBG;
@@ -27,74 +29,66 @@ public class Player extends GameObject {
 	private Scene gameScene;
 	private Handler handler;
 	private GameObject tempObj;
-	
-	private Boolean isLeftKeyPressed;
-	private Boolean isRightKeyPressed;
-	private Boolean isUpKeyPressed;
-	private Boolean isDownKeyPressed;
+	private DropItem tempDrop;
+	private GunDevil GD = null;
+	private BombDevil BD = null;
+	private KeyInput inputKey;
 	
 	private Boolean restrictRight = false;
 	private Boolean restrictLeft = false;
 	private Boolean restrictUp = false;
 	private Boolean restrictDown = false;
 	
+	private Boolean invincible = false;
+	
 	private int velx=0, vely=0;
+	private int speedDuration = 500;
+	private int invincibleDuration = 500;
+	private int notifDuration = 800;
 	
 	private ID id;
 	
-	public Player(float x, float y, ID id, Handler handler, AnchorPane mainPane, Scene mainScene) {
+	public Player(float x, float y, ID id, Handler handler, AnchorPane mainPane, Scene mainScene, KeyInput inputKey) {
 		super(x, y, 1000, 0, 0, 72, 72, id);
 		this.id = id;
 		this.handler = handler;
 		this.gamePane = mainPane;
 		this.gameScene = mainScene;
-		isLeftKeyPressed = isRightKeyPressed = isUpKeyPressed = isDownKeyPressed = false;
-		createKeyListeners();
+		this.inputKey = inputKey;
 		createPlayer();
-	}
-	
-	private void createKeyListeners() {
-		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A) {
-					isLeftKeyPressed = true;
-				} else if (event.getCode() == KeyCode.D) {
-					isRightKeyPressed = true;
-				}
-				if (event.getCode() == KeyCode.W) {
-					isUpKeyPressed = true;
-				} else if (event.getCode() == KeyCode.S) {
-					isDownKeyPressed = true;
-				}
-
-			}
-		});
-
-		gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A) {
-					isLeftKeyPressed = false;
-				} else if (event.getCode() == KeyCode.D) {
-					isRightKeyPressed = false;
-				}
-				if (event.getCode() == KeyCode.W) {
-					isUpKeyPressed = false;
-				} else if (event.getCode() == KeyCode.S) {
-					isDownKeyPressed = false;
-				}
-
-			}
-		});
 	}
 	
 	private void collide() {
 			for(int i=0; i<handler.object.size(); i++) {
 				if(handler.object.get(i).getId() == ID.Zombie) {
 					tempObj = handler.object.get(i);
-					if(getBounds().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
+					if(getBounds().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent()) && !invincible){
 						this.HP -= 1;
+					}
+				}
+				else if(handler.object.get(i).getId() == ID.Drop) {
+					tempDrop = (DropItem) handler.object.get(i);
+					if(getBounds().getBoundsInParent().intersects(tempDrop.getBounds().getBoundsInParent())){
+						if(tempDrop.getType() == "health") {addHP(100);}
+						else if(tempDrop.getType() == "speed") {addSpeed(1);}
+						else if(tempDrop.getType() == "invincibility") {invincible = true;}
+						else if (tempDrop.getType() == "GDevil") {
+							if(GD == null) {
+								GD = new GunDevil(x, y, ID.Talent, handler, gamePane);
+								handler.addObjTask.add(GD);
+							}else {
+								GD.cdDecrease(50);
+							}
+						}
+						else {
+							if(BD == null) {
+								BD = new BombDevil(x, y, ID.Talent, handler, gamePane);
+								handler.addObjTask.add(BD);
+							}else {
+								BD.cdDecrease(100);
+							}
+						}
+						tempDrop.despawnProtocol();
 					}
 				}
 				else if(handler.object.get(i).getId()== ID.Block) {
@@ -125,60 +119,68 @@ public class Player extends GameObject {
 	
 	@Override
 	public void move() {
+			//EXP bar adjustment
 			HPBar.setWidth(HP*width/MaxHP);
 			EXPBar.setWidth(EXP*1540/EXPCap);
 			EXPBG.toFront();
 			EXPBar.toFront();
 			collide();
-			if (isRightKeyPressed && !isLeftKeyPressed && !restrictRight) { //kanan
+			
+			//speed buf control
+			if(speed>0 && speedDuration>0) {speedDuration--;}
+			else if(speed>0 && speedDuration<=0) {
+				speed = 0;
+				speedDuration = 500;
+			}
+			//invincible buf control
+			if(invincible && invincibleDuration>0) {invincibleDuration--;}
+			else if(invincible && invincibleDuration<=0) {
+				invincible = false;
+				invincibleDuration = 500;
+			}
+			
+			//movement
+			if (inputKey.isRightKeyPressed && !inputKey.isLeftKeyPressed && !restrictRight) { //kanan
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.x < (GameWindow.BGWIDTH- width)/2) {
-					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() + 1.5);
-					this.x += 1.5;
-					HPBar.setX(this.x);
-					HPBG.setX(this.x);
-					EXPBG.setX(this.x-732);
-					EXPBar.setX(this.x-732);
+					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() + (1.5 + speed));
+					this.x += (1.5 + speed);
 					this.velx= 4;
 				}
 			}
-			if (isUpKeyPressed && !isDownKeyPressed && !restrictUp) { //atas
+			if (inputKey.isUpKeyPressed && !inputKey.isDownKeyPressed && !restrictUp) { //atas
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.y > -((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2 + height)+GameWindow.HEIGHT/2) {
-					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -1.5);
-					this.y -= 1.5;
-					HPBar.setY(this.y-15);
-					HPBG.setY(this.y-15);
-					EXPBG.setY(this.y+380);
-					EXPBar.setY(this.y+380+5);
+					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -(1.5 + speed));
+					this.y -= (1.5 + speed);
 					this.vely= 4;
 				}
 			}
-			if (isDownKeyPressed && !isUpKeyPressed && !restrictDown) { //bawah
+			if (inputKey.isDownKeyPressed && !inputKey.isUpKeyPressed && !restrictDown) { //bawah
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.y+height < GameWindow.HEIGHT+((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2)-GameWindow.HEIGHT/2) {
-					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +1.5);
-					this.y += 1.5;
-					HPBar.setY(this.y-15);
-					HPBG.setY(this.y-15);
-					EXPBG.setY(this.y+380);
-					EXPBar.setY(this.y+380+5);
+					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +(1.5 + speed));
+					this.y += (1.5 + speed);
 					this.vely= -4;
 				}
 			}
-			if (isLeftKeyPressed && !isRightKeyPressed && !restrictLeft) { //kiri
+			if (inputKey.isLeftKeyPressed && !inputKey.isRightKeyPressed && !restrictLeft) { //kiri
 				PlayerIcon.setImage(leftPlayerIcon);
 				if(this.x > -((GameWindow.BGWIDTH)/2 -GameWindow.WIDTH)-width/2) {
-					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() -1.5);
-					this.x -= 1.5;
-					HPBar.setX(this.x);
-					HPBG.setX(this.x);
-					EXPBG.setX(this.x-732);
-					EXPBar.setX(this.x-732);
+					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() -(1.5 + speed));
+					this.x -= (1.5 + speed);
 					this.velx=-4;
 				}
 			}
-			if (!isRightKeyPressed && !isLeftKeyPressed && !isDownKeyPressed && !isUpKeyPressed) {
+			HPBar.setX(this.x);
+			HPBG.setX(this.x);
+			EXPBG.setX(this.x-732);
+			EXPBar.setX(this.x-732);
+			HPBar.setY(this.y-15);
+			HPBG.setY(this.y-15);
+			EXPBG.setY(this.y+380);
+			EXPBar.setY(this.y+380+5);
+			if (!inputKey.isRightKeyPressed && !inputKey.isLeftKeyPressed && !inputKey.isDownKeyPressed && !inputKey.isUpKeyPressed) {
 				PlayerIcon.setImage(idlePlayerIcon);
 			}
 	}
