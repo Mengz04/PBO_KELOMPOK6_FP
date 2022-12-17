@@ -16,14 +16,14 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
 
 public class MainMenuWindow {
-	private static final int WIDTH = 1920;
-	private static final int HEIGHT = 1080;
+	private static final int WIDTH = 1600;
+	private static final int HEIGHT = 900;
 	
 	private AnchorPane mainPane;
 	private Scene mainScene;
 	private Stage mainStage;
 	
-	private static final int MENU_BUTTONS_START_X = 1400;
+	private static final int MENU_BUTTONS_START_X = 1200;
 	private static final int MENU_BUTTONS_START_Y = 150;
 	
 	List<MenuButton> menuButtons;
@@ -92,7 +92,7 @@ public class MainMenuWindow {
 	}
 
 	private void createBackground() {
-		Image backgroundImage = new Image("/resources/chainsawman_bg.png", 1920, 1080, true, true);
+		Image backgroundImage = new Image("/resources/chainsawman_bg.png", 1600, 900, true, true);
 		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));

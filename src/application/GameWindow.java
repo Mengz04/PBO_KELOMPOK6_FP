@@ -95,7 +95,6 @@ public class GameWindow{
 		gameScene.setOnMouseClicked(mouseHandler);
 		gameStage = new Stage();
 		gameStage.setScene(gameScene);
-		gameStage.setFullScreen(true);
 		gameStage.setResizable(false);
 		gameStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		Rectangle EXPBG = new Rectangle(0, 1055, 1920, 25);
