@@ -76,7 +76,40 @@ public class GameWindow{
 	private void createObjects() { //spawn objects
 		handler = new Handler();
 		inputKey = new KeyInput(gameScene);
+		// Level Design
+		handler.addObject(new Block(1124, 504, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(724, 504, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(924, 704, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(924, 304, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		
 		handler.addObject(new Block(0, 0, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(-400, 0, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(-200, 204, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(-200, -204, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		
+		handler.addObject(new Block(2000, 0, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(1600, 0, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(1800, 204, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(1800, -204, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		
+		handler.addObject(new Block(1124, -504, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(724, -504, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(924, -304, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		
+		handler.addObject(new Block(1124, 1512, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(724, 1512, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(924, 1312, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+	
+		handler.addObject(new Block(0, 1000, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(-400, 1000, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(-200, 1204, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(-200, 796, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		
+		handler.addObject(new Block(2000, 1000, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(1600, 1000, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(1800, 1204, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		handler.addObject(new Block(1800, 796, ID.Block, 135, 97,gamePane,handler, "GreenContainerHorizontal"));
+		
 		playerLevelUtil = new Player((WIDTH/2)-(CHAR_SIZE/2), (HEIGHT/2)-(CHAR_SIZE/2), ID.Player, handler, gamePane, gameScene, inputKey);
 		tempPlayer = playerLevelUtil;
 		handler.addObject(tempPlayer);
