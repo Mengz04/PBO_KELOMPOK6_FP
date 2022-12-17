@@ -25,7 +25,7 @@ public class MenuButton extends Button {
 	}
 	
 	private void setButtonFont() {
-		setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 23));
+		setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 22));
 	}
 	
 	private void setButtonPressedStyle() {
