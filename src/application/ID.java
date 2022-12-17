@@ -8,5 +8,6 @@ public enum ID {
 	Bullet(),
 	Block(),
 	Talent(),
-	Grenade();
+	Grenade(),
+	Drop();
 }
