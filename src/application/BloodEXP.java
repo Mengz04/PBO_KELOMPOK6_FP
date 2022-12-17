@@ -36,6 +36,7 @@ public class BloodEXP extends GameObject{
 	public void move() {
 		if(getBounds().getBoundsInParent().intersects(tempPlayer.getBounds().getBoundsInParent())) {
 			tempPlayer.addEXP(5);
+			tempPlayer.addHP(20);
 			gamePane.getChildren().remove(EXPIcon);
 			handler.removeTask.add(this);
 		}
