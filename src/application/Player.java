@@ -36,11 +36,6 @@ public class Player extends GameObject {
 	private BombDevil BD = null;
 	private KeyInput inputKey;
 	
-	private Boolean restrictRight = false;
-	private Boolean restrictLeft = false;
-	private Boolean restrictUp = false;
-	private Boolean restrictDown = false;
-	
 	private Boolean invincible = false;
 	
 	private int velx=0, vely=0;
@@ -96,24 +91,23 @@ public class Player extends GameObject {
 					tempObj = handler.object.get(i);
 					if(GB1().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
 						if(velx>0) {
-							velx=0;
-							restrictRight = true;
+							this.x = tempObj.getX() - this.width;
+							this.velx = 0;
 						}else if(velx<0) {
+							this.x = tempObj.getX() + tempObj.getWidth();
 							velx=0;
-							restrictLeft = true;
 						}
-					}else {restrictRight = false; restrictLeft = false;}
+					}
 					
 					if(GB2().getBoundsInParent().intersects(tempObj.getBounds().getBoundsInParent())){
 						if(vely>0) {
+							this.y = tempObj.getY() + tempObj.getHeight();
 							vely=0;
-							restrictUp = true;
 						}else if(vely<0) {
+							this.y = tempObj.getY() - this.height;
 							vely=0;
-							restrictDown = true;
 						}
-					}else {restrictUp = false; restrictDown = false;}
-					
+					}
 				}
 			}
 	}
@@ -129,8 +123,6 @@ public class Player extends GameObject {
 			levelLabel.toFront();
 			levelLabel.setText(String.valueOf(level));
 			
-			collide();
-			
 			//speed buf control
 			if(speed>0 && speedDuration>0) {speedDuration--;}
 			else if(speed>0 && speedDuration<=0) {
@@ -145,38 +137,37 @@ public class Player extends GameObject {
 			}
 			
 			//movement
-			if (inputKey.isRightKeyPressed && !inputKey.isLeftKeyPressed && !restrictRight) { //kanan
+			if (inputKey.isRightKeyPressed && !inputKey.isLeftKeyPressed) { //kanan
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.x < (GameWindow.BGWIDTH- width)/2) {
-					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() + (1.5 + speed));
 					this.x += (1.5 + speed);
 					this.velx= 4;
 				}
 			}
-			if (inputKey.isUpKeyPressed && !inputKey.isDownKeyPressed && !restrictUp) { //atas
+			if (inputKey.isUpKeyPressed && !inputKey.isDownKeyPressed) { //atas
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.y > -((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2 + height)+GameWindow.HEIGHT/2) {
-					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() -(1.5 + speed));
 					this.y -= (1.5 + speed);
 					this.vely= 4;
 				}
 			}
-			if (inputKey.isDownKeyPressed && !inputKey.isUpKeyPressed && !restrictDown) { //bawah
+			if (inputKey.isDownKeyPressed && !inputKey.isUpKeyPressed) { //bawah
 				PlayerIcon.setImage(rightPlayerIcon);
 				if(this.y+height < GameWindow.HEIGHT+((GameWindow.BGHEIGHT-GameWindow.HEIGHT)/2)-GameWindow.HEIGHT/2) {
-					PlayerIcon.setLayoutY(PlayerIcon.getLayoutY() +(1.5 + speed));
 					this.y += (1.5 + speed);
 					this.vely= -4;
 				}
 			}
-			if (inputKey.isLeftKeyPressed && !inputKey.isRightKeyPressed && !restrictLeft) { //kiri
+			if (inputKey.isLeftKeyPressed && !inputKey.isRightKeyPressed) { //kiri
 				PlayerIcon.setImage(leftPlayerIcon);
 				if(this.x > -((GameWindow.BGWIDTH)/2 -GameWindow.WIDTH)-width/2) {
-					PlayerIcon.setLayoutX(PlayerIcon.getLayoutX() -(1.5 + speed));
 					this.x -= (1.5 + speed);
 					this.velx=-4;
 				}
 			}
+			collide();
+			PlayerIcon.setLayoutX(this.x);
+			PlayerIcon.setLayoutY(this.y);
 			HPBar.setX(this.x);
 			HPBG.setX(this.x);
 			EXPBG.setX(this.x-732);
@@ -199,10 +190,10 @@ public class Player extends GameObject {
 	}
 	
 	public Rectangle GB1() {
-		return new Rectangle((int)x+velx/2, (int)y+2, this.width, this.height-4);
+		return new Rectangle((int)x+velx, (int)y+5, this.width, this.height-10);
 	}
 	public Rectangle GB2() {
-		return new Rectangle((int)x+2, (int)y-vely/2, this.width-4, this.height);
+		return new Rectangle((int)x+5, (int)y-vely, this.width-10, this.height);
 	}
 	
 	private void createPlayer() {
